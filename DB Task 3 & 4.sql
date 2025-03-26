@@ -310,9 +310,9 @@ select u.cname, c.courierid from courier_user u
 join courier c on u.cname=c.receivername;
 
 ----------37.List all employees and all locations, showing all possible combinations:
-select * from employee;
-select * from Location_Customer;
-no matching columns
+select e.* ,l.* from employee e cross join 
+ Location_Customer l;
+
 
 -------------38. Retrieve a list of couriers and their corresponding sender information (if available) 
 select * from courier;
