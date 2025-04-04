@@ -153,13 +153,11 @@ select product_id ,pname from products where product_id not in
 select customer_id ,cname from customers where customer_id not in (select customer_id 
 from orders);
 
-------------17.subquery to calculate the percentage of total revenue for a product---------------
-select DIFFERENCE(o.total_price,p.price)as Revenue from products p join
-cart c on p.product_id=c.product_id join orders o on c.customer_id=o.customer_id;
-select * from products;
-select * from orders;
-select * from customers;
-select * from cart; 
+------------17.subquery to calculate the percentage of total revenue for a product---------------s
+elect p.product_id,p.pname,(o.total_price-p.price)/100.00 as Revenue into AvgRevenue1  from products p join
+cart c on p.product_id=c.product_id join orders o on c.customer_id=o.customer_id ;
+select sum(Revenue) from AvgRevenue1 ;
+
 
 -----------18.subquery to find the products with low stock---------------------
 select product_id, pname from products where stockquantity=(
