@@ -1,0 +1,1677 @@
+Assignment -1
+-----------------
+
+Program.cs
+========
+using System.Text.RegularExpressions;
+
+namespace C_Assignment1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Task1
+            //1. Write a program that takes the customer's credit score and annual income as input.
+            //2. Use conditional statements (if-else) to determine if the customer is eligible for a loan.
+            //3. Display an appropriate message based on eligibility.
+
+            Console.WriteLine("Enter the credit card score");
+            int score = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter your Annual income:");
+            double income = double.Parse(Console.ReadLine());
+            if (score >= 700 && income >= 50000)
+            {
+                Console.WriteLine("You are Eligible for applying loan");
+            }
+            else
+            {
+                Console.WriteLine("You are not Eligible for applying Loan");
+            }
+
+            //Task 2
+            /*
+            1.Create a program that simulates an ATM transaction. Display options such as "Check Balance,"
+            "Withdraw," "Deposit,".
+            2.Ask the user to enter their current balance and the amount they want to
+            withdraw or deposit. 
+            3.Implement checks to ensure that the withdrawal amount is not greater than the
+            available balance and that the withdrawal amount is in multiples of 100 or 500.
+            4.Display appropriate messages for success or failure.
+            */
+
+
+            Console.WriteLine("Enter your current balane:");
+            int Balance = int.Parse(Console.ReadLine());
+            Console.WriteLine("Choices:\n 1.Check Balance\n 2.Withdraw\n3.Deposit");
+            Console.WriteLine("Enter your choice:");
+            int choice = int.Parse(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine($"Your Balance Amount is:{Balance}");
+                    break;
+
+                case 2:
+                    Console.WriteLine("Enter the Amount for Withdrawal:");
+                    double withdraw = double.Parse(Console.ReadLine());
+                    if (withdraw <= Balance)
+                    {
+                        if (withdraw % 100 == 0 || withdraw % 500 == 0)
+                        {
+                            Console.WriteLine($"Successful withdrawal of amount {withdraw}");
+                            double bb = Balance - withdraw;
+                            Console.WriteLine($"Available Balance:{bb}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Withdrawal Amount is not the multiples of 100 and 500");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Exceeding the Available Balance");
+                    }
+                    break;
+
+                case 3:
+                    Console.WriteLine("Enter the amount to be deposited:");
+                    double Money = double.Parse(Console.ReadLine());
+                    double totalAmount = Money + Balance;
+                    Console.WriteLine($"Available balance Now:{totalAmount}");
+                    break;
+
+            }
+
+            //Task 3
+            /*  1. Create a program that calculates the future balance of a savings account.
+                2. Use a loop structure (e.g., for loop) to calculate the balance for multiple customers.
+                3. Prompt the user to enter the initial balance, annual interest rate, and the number of years.
+                4. Calculate the future balance using the formula:      
+                   future_balance = initial_balance * (1 + annual_interest_rate/100)^years.
+                5. Display the future balance for each customer.  */
+
+
+            Console.Write("Enter the number of customers: ");
+            int noOfCustomers = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= noOfCustomers; i++)
+            {
+                Console.WriteLine($"\nCustomer {i}:");
+
+                // Getting customer i/p
+                Console.Write("Enter initial balance: ");
+                double initialBalance = double.Parse(Console.ReadLine());
+
+                Console.Write("Enter annual interest rate (in %): ");
+                double annualInterestRate = double.Parse(Console.ReadLine());
+
+                Console.Write("Enter number of years for calculation: ");
+                int years = int.Parse(Console.ReadLine());
+
+                // Calculating future balance
+                double futureBalance = initialBalance * Math.Pow(1 + (annualInterestRate / 100), years);
+
+                // Displaying the result for each customers
+                Console.WriteLine($"Future balance after {years} years: {futureBalance:C}");
+            }
+
+            //Task 4
+            /*
+            1. Create a C# program that simulates a bank with multiple customer accounts.
+            2. Use a loop (e.g., while loop) to repeatedly ask the user for their account number and
+            balance until they enter a valid account number.
+            3. Validate the account number entered by the user.
+            4. If the account number is valid, display the account balance. If not, ask the user to try again.
+            */
+
+            string accNumber;
+            double balance1;
+
+            while (true)
+            {
+                // Get account number from user
+                Console.Write("Enter your account number (Format: ABCD1234): ");
+                accNumber = Console.ReadLine();
+
+                // Validate format: 4 uppercase letters + 4 digits
+                if (accNumber.Length == 8)
+                {
+                    bool isValid = true;
+
+                    // Check first 4 characters are uppercase letters
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (!char.IsUpper(accNumber[i]) || !char.IsLetter(accNumber[i]))
+                        {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    // Check last 4 characters are digits
+                    for (int i = 4; i < 8 ; i++)
+                    {
+                        if (!char.IsDigit(accNumber[i]))
+                        {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    if (isValid)
+                    {
+                        Console.Write("Enter your account balance: ");
+                        balance1 = double.Parse(Console.ReadLine());
+                        if (true)
+                        {
+                            Console.WriteLine($"Your account balance: {balance1}");
+                            break; // Exit loop after valid input
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid account format! Try again (Example: ABCD1234).");
+                    }
+                }
+
+            }
+
+                //Task 5
+                /*   Task 5: Password Validation
+                 Write a program that prompts the user to create a password for their bank account. Implement if
+                 conditions to validate the password according to these rules:
+                 • The password must be at least 8 characters long.
+                 • It must contain at least one uppercase letter.
+                 • It must contain at least one digit.
+                 • Display appropriate messages to indicate whether their password is valid or not.   */
+
+
+                Console.Write("Create your password: ");
+                string password = Console.ReadLine();
+
+                bool hasUppercase = false;
+                bool hasDigit = false;
+
+                // for checking 
+                foreach (char c in password)
+                {
+                    if (char.IsUpper(c))
+                        hasUppercase = true;
+                    if (char.IsDigit(c))
+                        hasDigit = true;
+                }
+
+                // Validating the password
+                if (password.Length < 8)
+                {
+                    Console.WriteLine("Password must be at least 8 characters long.");
+                }
+                else if (!hasUppercase)
+                {
+                    Console.WriteLine("Password must contain at least one uppercase letter.");
+                }
+                else if (!hasDigit)
+                {
+                    Console.WriteLine("Password must contain at least one digit.");
+                }
+                else
+                {
+                    Console.WriteLine("Password created successfully!");
+                }
+
+                //Task 6
+                /*  1.Create a program that maintains a list of bank transactions (deposits and withdrawals) for a customer.
+                    2.Use a while loop to allow the user to keep adding transactions until they choose to exit. 
+                    3.Display the  transaction history upon exit using looping statements.   */
+
+                List<string> transactions = new List<string>(); // Stores transaction history
+                double balance3 = 0;
+                bool running = true;
+
+                while (running)
+                {
+                    Console.WriteLine("\n--- Bank Transaction Menu ---");
+                    Console.WriteLine("1. Deposit");
+                    Console.WriteLine("2. Withdraw");
+                    Console.WriteLine("3. Exit & Show History");
+                    Console.Write("Choose an option: ");
+
+                    string choice2 = Console.ReadLine();
+
+                    if (choice2 == "1") // Deposit
+                    {
+                        Console.Write("Enter deposit amount: ");
+                        if (double.TryParse(Console.ReadLine(), out double deposit) && deposit > 0)
+                        {
+                            balance3 += deposit;
+                            transactions.Add($"Deposited: +${deposit:F2}, New Balance: ${balance3:F2}");
+                            Console.WriteLine("Deposit successful!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid amount! Try again.");
+                        }
+                    }
+                    else if (choice2 == "2") // Withdraw
+                    {
+                        Console.Write("Enter withdrawal amount: ");
+                        if (double.TryParse(Console.ReadLine(), out double withdrawal) && withdrawal > 0)
+                        {
+                            if (withdrawal <= balance3)
+                            {
+                                balance3 -= withdrawal;
+                                transactions.Add($"Withdrawn: -${withdrawal}, New Balance: ${balance3}");
+                                Console.WriteLine("Withdrawal successful!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Insufficient balance!");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid amount! Try again.");
+                        }
+                    }
+                    else if (choice2 == "3") // Exit & Show History
+                    {
+                        running = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice! Please select again.");
+                    }
+                }
+
+                // Display transaction history
+                Console.WriteLine("\n--- Transaction History ---");
+                if (transactions.Count == 0)
+                {
+                    Console.WriteLine("No transactions recorded.");
+                }
+                else
+                {
+                    foreach (string transaction in transactions)
+                    {
+                        Console.WriteLine(transaction);
+                    }
+                }
+
+                Console.WriteLine($"Final Balance: ${balance3}");
+            }
+        }
+    }
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Assignment-2
+----------------
+
+Program.cs
+========
+using System.Text.RegularExpressions;
+
+namespace Assignment_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+           
+                CourierCompany company = new CourierCompany("Ecomm Delivery");
+
+               
+                User user = new User(1, "Ravei", "ravei@example.com", "ravei12", "8956743829", "123 Gandhi St,Chennai");
+                User user2 = new User(2, "Hari", "hari@example.com", "hari01", "7845637729", "98 Gcross,vellore");
+                
+                Courier courier1 = new Courier(1, "Ravei", "123 Gandhi St,chennai", "Joe", "456 Nehru St,coimbatore", 5.5, "Processing", "TRK123", DateTime.Now.AddDays(3), user.UserID);
+                company.AddCourier(courier1);
+                Courier courier2 = new Courier(2, "Hari", "98 Gcross,vellore", "Bob", "853 Tea St,Ooty", 6.8, "Delivered", "TRK543", DateTime.Now, user2.UserID);
+                company.AddCourier(courier2);
+
+                Employee employee1 = new Employee(1, "Jabel", "jabel@example.com", "9876647210", "Delivery Agent", 30000);
+                company.AddEmployees(employee1);
+
+              
+                Location location1 = new Location(1, "WaterHouse", "789 Oak St,Bangalore");
+                company.AddLocations(location1);
+
+                Payment payment1 = new Payment(1, courier1.CourierID, 100.50, DateTime.Now);
+
+
+                
+                Console.WriteLine("\n--------------------------------------------------------------\n");
+
+                // 1. Check Order Status
+                company.CheckingOrderStatus(courier1);
+
+                // 2. Categorize Parcel
+                Console.WriteLine($"Parcel Weight Category: {company.CategorizingParcel(courier1.Weight)}");
+                Console.WriteLine($"Parcel Weight Category: {company.CategorizingParcel(courier2.Weight)}");
+
+                // 3. Authenticate User
+                List<User> users = new List<User> { user };
+                Console.WriteLine($"Authentication Success: {company.AuthenticatedUser("ravei@example.com", "ravei12", users)}");
+                List<User> users2 = new List<User> { user2 };
+                Console.WriteLine($"Authentication Success: {company.AuthenticatedUser("hari@example.com", "hari01", users2)}");
+
+                // 4. Assign Couriers
+                company.AssigningCourier(company.CourierDetails);
+
+                // 5. Display Customer Orders
+                company.DisplayOrders(user.UserID, company.CourierDetails);
+                company.DisplayOrders(user2.UserID, company.CourierDetails);
+              
+                // 6. Track Real-Time Courier
+                company.TrackingCourier(courier1);
+                company.TrackingCourier(courier2);
+
+               // 7. Tracking History (Array)
+               string[] trackingHistory = { "Dispatched", "In Transit", "Out for Delivery", "Delivered" };
+                Console.WriteLine($"Tracking Status: {trackingHistory.Last()}");
+
+                // 8. Find Nearest Courier
+                Courier nearestCourier = company.FindNearCourier(company.CourierDetails);
+                Console.WriteLine($"Nearest Available Courier: {nearestCourier.CourierID}");
+
+                // 9. Parcel Tracking (2D Array)
+                Console.WriteLine($"Tracking Info: {company.GetStatus("TRK123")}");
+                Console.WriteLine($"Tracking Info: {company.GetStatus("TRK543")}");
+
+
+               // 10. Validate Customer Data
+                Console.WriteLine($"Is Valid Name: {company.ValidatingData("Ravei", "name")}");
+                Console.WriteLine($"Is Valid Phone: {company.ValidatingData("8956743829", "phone")}");
+
+                // 11. Address Formatting
+                Console.WriteLine($"Formatted Address: {company.FormatedAddress("123 Gandhi st,chennai", "new york", "ny", "10001")}");
+
+                // 12. Order Confirmation Email
+                company.SendingConfirmationEmail(user, courier1);
+                company.SendingConfirmationEmail(user2, courier2);
+
+                // 13. Calculate Shipping Cost
+                Console.WriteLine($"Shipping Cost: ${company.CalculatingShippingCost("Warehouse 1", "456 Nehru St,coimbatore", courier1.Weight)}");
+
+                // 14. Generate Secure Password
+                Console.WriteLine($"Generated Password: {company.GenerateUserPassword(10)}");
+
+                // 15. Find Similar Addresses
+                List<string> addresses = new List<string> { "123 Gandhi St,chennai", "456 Nehru St,coimbatore", "789 Oak St,Bangalore", "123 Maple St" };
+                var similarAddresses = company.FindingSimilarAddresses("123", addresses);
+                Console.WriteLine("Similar Addresses: " + string.Join(", ", similarAddresses));
+
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+            }
+
+        }
+    }
+
+    
+Courier.cs
+=======
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class Courier
+    {
+        public int CourierID { get; set; }
+        public string SenderName { get; set; }
+        public string SenderAddress { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverAddress { get; set; }
+        public double Weight {
+            set;
+            get;
+        }
+            
+        public string Status { get; set; }
+        public string TrackingNumber { get; set; }
+        public DateTime DeliveryDate { get; set; }
+        public int UserID { get; set; }
+
+        public Courier()
+        {
+            
+        }
+        public Courier(int courierID, string senderName, string senderAddress, string receiverName,
+                       string receiverAddress, double weight, string status, string trackingNumber,
+                       DateTime deliveryDate, int userID)
+        {
+            CourierID = courierID;
+            SenderName = senderName;
+            SenderAddress = senderAddress;
+            ReceiverName = receiverName;
+            ReceiverAddress = receiverAddress;
+            Weight = weight;
+            Status = status;
+            TrackingNumber = trackingNumber;
+            DeliveryDate = deliveryDate;
+            UserID = userID;
+        }
+    }
+}
+
+CourierCompany.cs
+==============
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class CourierCompany
+    {
+        public string CompanyName { get; set; }
+        public Courier[] CourierDetails { get; set; }
+        public Employee[] EmployeeDetails { get; set; }
+        public Location[] LocationDetails { get; set; }
+
+        public CourierCompany(string companyName)
+        {
+            CompanyName = companyName;
+            CourierDetails = new Courier[0];  // Initialize with provided couriers
+            EmployeeDetails = new Employee[0]; // Empty array initially
+            LocationDetails = new Location[0]; // Empty array initially
+        }
+
+        // Method to add employees using params
+        public void AddEmployees(params Employee[] employees)
+        {
+            EmployeeDetails = employees;  // Assign the given employees
+        }
+
+        // Method to add locations using params
+        public void AddLocations(params Location[] locations)
+        {
+            LocationDetails = locations;  // Assign the given locations
+        }
+        //Method to add Courier
+        public void AddCourier(params Courier[] couriers)
+        {
+            CourierDetails = couriers;  // Assign the given employees
+        }
+
+
+        //question 1:Write a program that checks whether a given order is delivered or
+        //not based on its status (e.g., "Processing," "Delivered," "Cancelled"). Use if-else statements for this.
+        public void CheckingOrderStatus(Courier courier)
+        {
+            if (courier.Status == "Delivered")
+                Console.WriteLine("Order has been delivered.");
+            else if (courier.Status == "Processing")
+                Console.WriteLine("Order is being processed.");
+            else
+                Console.WriteLine("Order is cancelled.");
+        }
+        //question 2:Implement a switch-case statement to categorize parcels based on
+        //their weight into "Light," "Medium," or "Heavy."
+        public string CategorizingParcel(double weight)
+        {
+            switch (weight)
+            {
+                case < 2:
+                    return "Light";
+                case <= 5:
+                    return "Medium";
+                default:
+                    return "Heavy";
+            }
+        }
+        //question 3:Implement User Authentication 1. Create a login system for employees and
+        //customers using C# control flow statements.
+        public bool AuthenticatedUser(string email, string password, List<User> users)
+        {
+            foreach (var user in users)
+            {
+                if (user.Email == email && user.Password == password)
+                    return true;
+            }
+            return false;
+        }
+        //question 4:Implement Courier Assignment Logic 1. Develop a mechanism to assign couriers to
+        //shipments based on predefined criteria using loops.
+        public void AssigningCourier(params Courier[] couriers)
+        {
+            foreach (var courier in couriers)
+            {
+                Console.WriteLine($"Assigning Courier {courier.CourierID}");
+            }
+        }
+        //question 5: Write a C# program that uses a for loop to display all the orders
+        //for a specific customer.
+        public void DisplayOrders(int userId, params Courier[] couriers)
+        {
+            for (int i = 0; i < couriers.Length; i++)
+            {
+                if (couriers[i].UserID == userId)
+                    Console.WriteLine($"Order {couriers[i].CourierID} for User {userId}");
+            }
+        }
+        //queestion 6:Implement a while loop to track the real-time location of a courier
+        //until it reaches its destination.
+        public void TrackingCourier(Courier courier)
+        {
+            while (courier.Status != "Delivered")
+            {
+                Console.WriteLine($"Tracking {courier.TrackingNumber}: Status - {courier.Status}");
+                courier.Status = "Delivered"; // Simulate update
+            }
+        }
+        //question 7:Create an array to store the tracking history of a parcel, where
+        //each entry represents a location update.
+        string[] trackingHistory = { "Dispatched", "In Transit", "Out for Delivery", "Delivered" };
+
+        //question 8:Implement a method to find the nearest available courier
+        //for a new order using an array of couriers.  
+        public Courier FindNearCourier(params Courier[] couriers)
+        {
+            return couriers.OrderBy(c => c.Weight).FirstOrDefault();
+        }
+        //question 9:Parcel Tracking: Create a program that allows users to
+        //input a parcel tracking number.Store the tracking number and Status in 2d String Array.
+        //Initialize the array with values. Then, simulate the tracking process by displaying messages like "Parcel in transit
+        //" "Parcel out for delivery," or "Parcel 
+       // delivered" based on the tracking number's status.
+        public string GetStatus(string trackingNumber)
+        {
+            string[,] trackingData = {
+            { "TRK123", "In Transit" },
+            { "TRK456", "Out for Delivery" }
+        };
+            for (int i = 0; i < trackingData.GetLength(0); i++)
+                if (trackingData[i, 0] == trackingNumber)
+                    return trackingData[i, 1];
+            return "Not Found";
+        }
+        //question 10:Customer Data Validation: Write a function which takes 2 parameters, data-denotes the data and detail-denotes
+        //if it is name addtress or phone number.Validate customer information based on following critirea.
+        //Ensure that names contain only letters and are properly capitalized, addresses do not contain special characters,
+        //and phone numbers follow a specific format 
+        public bool ValidatingData(string data, string type)
+        { if (type == "name")
+            { // Check all characters are letters
+                for (int i = 0; i < data.Length; i++)
+                { if (!((data[i] >= 'A' && data[i] <= 'Z') || (data[i] >= 'a' && data[i] <= 'z')))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if (type == "phone")
+            { // Expected format: XXX-XXX-XXXX (12 characters)
+                if (data.Length != 12)
+                {
+                    return false;
+                }
+
+                // Check digits and dashes in correct places
+                for (int i = 0; i < data.Length; i++)
+                { if (i == 3 || i == 7)
+                    { if (data[i] != '-')
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    { if (data[i] < '0' || data[i] > '9')
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            return false; // Invalid type
+        }
+
+        //question 11:Address Formatting: Develop a function that takes an address as input (street, city, state, zip code)
+        //and formats it correctly, including capitalizing the first letter
+        //of each word and properly formatting the zip code.
+        public string FormatedAddress(string street, string city, string state, string zip)
+        {
+            return $"{char.ToUpper(street[0]) + street.Substring(1)}, {char.ToUpper(city[0]) + city.Substring(1)}, {state.ToUpper()} {zip}";
+        }
+        //question 12: Order Confirmation Email: Create a program that generates an order confirmation email.
+        //The email should include details such as the customer's name, order number, delivery address,
+        //and expected delivery date.
+        public void SendingConfirmationEmail(User user, Courier courier)
+        {
+            Console.WriteLine($"Dear {user.UserName}, Your order {courier.TrackingNumber} will be delivered to {user.Address} on {courier.DeliveryDate}.");
+        }
+        //question 13:Calculate Shipping Costs: Develop a function that calculates the shipping cost based on the distance
+        //between two locations and the weight of the parcel. You can use string
+        //inputs for the source and destination addresses.
+        public double CalculatingShippingCost(string source, string destination, double weight)
+        {
+            return weight * new Random().Next(10, 100) * 0.5;
+        }
+        //question 14:Password Generator: Create a function that generates secure passwords for
+        //courier system accounts. Ensure the passwords contain a mix of uppercase letters, lowercase letters, numbers,
+        //and special characters.
+        public string GenerateUserPassword(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            Random rand = new Random();
+            string password = "";
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = rand.Next(0, chars.Length); // Pick a random index
+                password += chars[index];               // Add the random char to the password
+            }
+
+            return password;
+        }
+
+        //question 15:Find Similar Addresses: Implement a function that finds similar addresses
+        //in the system. This can be useful for identifying duplicate customer entries or optimizing
+        //delivery routes.Use string functions to implement this.  Following tasks  are incremental stages to
+        //build an application and should be done in a single project 
+
+        public List<string> FindingSimilarAddresses(string query, List<string> addresses)
+        {
+            return addresses.Where(a => a.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+    }
+
+
+}
+
+Employee.cs
+=========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class Employee
+    {
+        public int EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
+        public string Email { get; set; }
+        public string ContactNumber { get; set; }
+        public string Role { get; set; }
+        public double Salary { get; set; }
+
+        public Employee(int employeeID, string employeeName, string email, string contactNumber, string role, double salary)
+        {
+            EmployeeID = employeeID;
+            EmployeeName = employeeName;
+            Email = email;
+            ContactNumber = contactNumber;
+            Role = role;
+            Salary = salary;
+        }
+    }
+}
+
+Location.cs
+========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class Location
+    {
+        public int LocationID { get; set; }
+        public string LocationName { get; set; }
+        public string Address { get; set; }
+
+        public Location(int locationID, string locationName, string address)
+        {
+            LocationID = locationID;
+            LocationName = locationName;
+            Address = address;
+        }
+
+    }
+}
+
+
+Payment.cs
+========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class Payment
+    {
+        public long PaymentID { get; set; }
+        public long CourierID { get; set; }
+        public double Amount { get; set; }
+        public DateTime PaymentDate { get; set; }
+
+        public Payment(long paymentID, long courierID, double amount, DateTime paymentDate)
+        {
+            PaymentID = paymentID;
+            CourierID = courierID;
+            Amount = amount;
+            PaymentDate = paymentDate;
+        }
+    }
+}
+
+
+User.cs
+======
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment_2
+{
+    internal class User
+    {
+        public int UserID { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ContactNumber { get; set; }
+        public string Address { get; set; }
+
+        public User(int userID, string userName, string email, string password, string contactNumber, string address)
+        {
+            UserID = userID;
+            UserName = userName;
+            Email = email;
+            Password = password;
+            ContactNumber = contactNumber;
+            Address = address;
+        }
+
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Assignment-3
+----------------
+
+Program.cs
+========
+using System;
+
+namespace Interface_Exception
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            CourierService courierService = new CourierService();
+
+            // Adding a courier staff
+            Employee newStaff = new Employee(55, "John", "john@example.com", "9876543210", "Delivery Agent", 30000);
+            int staffId = courierService.AddStaff(newStaff);
+            Console.WriteLine($"New Courier Staff Added: ID {staffId}");
+
+            // Placing an order
+            Courier newCourier = new Courier(92, "Alice", "123 Main St", "Bob", "456 Oak ,Chennai", 5.5, "Processing", "TkU5674", DateTime.Now.AddDays(3), staffId);
+            string trackingNumber = courierService.CourierOrder(newCourier);
+            Console.WriteLine($"Order Placed. Tracking Number: {trackingNumber}");
+
+            // Getting order status
+            string status = courierService.GetStatus(trackingNumber);
+            Console.WriteLine($"Order Status: {status}");
+
+            // Canceling an order
+            bool isCanceled = courierService.OrderCancelled(trackingNumber);
+            Console.WriteLine($"Order Canceled: {isCanceled}");
+
+
+            try
+            {
+                //  invalid tracking number
+                string Status = courierService.GetStatus(trackingNumber);
+                Console.WriteLine($"Tracking Status: {status}");
+            }
+            catch (TrackingNumberNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            try
+            {
+                //  invalid employee ID
+                courierService.VerifyEmployeeId(staffId);
+            }
+            catch (InvalidEmployeeIdException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                Console.WriteLine("Execution completed.");
+            }
+        }
+
+    }
+    }
+
+Interface.cs
+========
+using System.Collections.Generic;
+
+namespace Interface_Exception
+{
+    public interface ICourierService
+    {
+        string CourierOrder(Courier courierObj);  
+        string GetStatus(string trackingNumber);
+        bool OrderCancelled(string trackingNumber);
+        List<Courier> GetOrderAssigned(int staffID);
+    }
+
+    public interface ICourierAdminService
+    {
+        int AddStaff(Employee obj);
+    }
+}
+
+Employee.cs
+=========
+namespace Interface_Exception
+{
+    public class Employee
+    {
+        public int EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
+        public string Email { get; set; }
+        public string ContactNumber { get; set; }
+        public string Role { get; set; }
+        public double Salary { get; set; }
+
+        public Employee(int employeeID, string employeeName, string email, string contactNumber, string role, double salary)
+        {
+            EmployeeID = employeeID;
+            EmployeeName = employeeName;
+            Email = email;
+            ContactNumber = contactNumber;
+            Role = role;
+            Salary = salary;
+        }
+    }
+}
+
+CourierService.cs
+=============
+using System;
+using System.Collections.Generic;
+
+namespace Interface_Exception
+{
+    public class CourierService : ICourierService, ICourierAdminService
+    {
+        private List<Courier> couriers = new List<Courier>()
+        {
+            new Courier(92, "Alice", "123 Main St", "Bob", "456 Oak ,Chennai", 5.5, "Processing", "TkU5674", DateTime.Now.AddDays(3), 12)
+        };
+        private List<Employee> employees = new List<Employee>();
+
+        public string CourierOrder(Courier courierObj)  
+        {
+            couriers.Add(courierObj);
+            return courierObj.TrackingNumber;
+        }
+
+        public string GetStatus(string trackingNumber)
+        {
+            var order = couriers.Find(c => c.TrackingNumber == trackingNumber);
+            if (order == null)
+            {
+                //throw new TrackingNumberNotFoundException($"Tracking number {trackingNumber} not found.");
+                throw new TrackingNumberNotFoundException("Tracking number not found.");
+            }
+            return order.Status;
+        }
+
+        public bool OrderCancelled(string trackingNumber)
+        {
+            var order = couriers.Find(c => c.TrackingNumber == trackingNumber);
+            if (order != null && order.Status == "Delayed")
+            {
+                couriers.Remove(order);
+                return true;
+            }
+            return false;
+        }
+
+        public List<Courier> GetOrderAssigned(int staffID)
+        {
+            List<Courier> assignedCouriers = new List<Courier>();
+
+            foreach (Courier courier in couriers)
+            {
+                if (courier.AssignedEmployeeID == staffID)
+                {
+                    assignedCouriers.Add(courier);
+                }
+            }
+
+            return assignedCouriers;
+        }
+
+
+        public int AddStaff(Employee obj)
+        {
+            obj.EmployeeID = employees.Count + 1;
+            employees.Add(obj);
+            return obj.EmployeeID;
+        }
+        public void VerifyEmployeeId(int employeeId)
+        {
+            var employee = employees.Find(e => e.EmployeeID == employeeId);
+            if (employee == null)
+            {
+                throw new InvalidEmployeeIdException($"Employee ID {employeeId} does not exist.");
+            }
+        }
+    }
+}
+
+
+CourierException.cs
+===============
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Interface_Exception
+{
+    public class TrackingNumberNotFoundException : Exception
+    {
+        public TrackingNumberNotFoundException(string message) : base(message) { }
+    }
+
+    public class InvalidEmployeeIdException : Exception
+    {
+        public InvalidEmployeeIdException(string message) : base(message) { }
+    }
+
+}
+
+
+Courier.cs
+=======
+using System;
+
+namespace Interface_Exception
+{
+    public class Courier
+    {
+        public int CourierID { get; set; }
+        public string SenderName { get; set; }
+        public string SenderAddress { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverAddress { get; set; }
+        public double Weight { get; set; }
+        public string Status { get; set; }
+        public string TrackingNumber { get; set; }
+        public DateTime DeliveryDate { get; set; }
+        public int AssignedEmployeeID { get; set; }  
+
+       
+
+        public Courier(int courierID, string senderName, string senderAddress, string receiverName,
+                       string receiverAddress, double weight, string status, string trackingNumber,
+                       DateTime deliveryDate, int assignedEmployeeID)
+        {
+            CourierID = courierID;
+            SenderName = senderName;
+            SenderAddress = senderAddress;
+            ReceiverName = receiverName;
+            ReceiverAddress = receiverAddress;
+            Weight = weight;
+            Status = status;
+            TrackingNumber = trackingNumber;
+            DeliveryDate = deliveryDate;
+            AssignedEmployeeID = assignedEmployeeID;
+            
+        }
+    }
+}
+
+NUnit testcase class
+------------------------   
+CourierServiceTest.cs
+================
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Interface_Exception;
+
+namespace CourierServiceTest
+{
+    [TestFixture]
+    internal class CourierServiceTest
+    {
+        Courier courier = null;
+        CourierService cs = null;
+
+        [SetUp]
+        public void InitializeCourier()
+        {
+            cs=new CourierService();
+        }
+
+        //check for GetCourierOrder
+        [Test]
+        public void GetCourierOrederReturnsTrackingNumberWithCourierId()
+        {
+            Courier c1 = new Courier(courierID: 92,senderName: "Alice", senderAddress: "123 Main St", receiverName: "Bob",receiverAddress: "456 Oak ,Chennai", weight: 5.5, status: "Processing", trackingNumber: "TkU5674", deliveryDate: DateTime.Now.AddDays(3) , assignedEmployeeID: 12);
+            var courier=cs.CourierOrder(c1);
+
+            Assert.AreEqual(courier,c1.TrackingNumber);
+            
+        }
+
+        [Test]
+        public void GetCourierStatusReturnsStatusWithTrackingNumber()
+        {
+            string trackingNumber = "TkU5674";
+            string orderStatus = "Delayed";
+            var status = cs.GetStatus(trackingNumber);
+
+            Assert.AreEqual(status,orderStatus);
+        }
+
+        [Test]
+        public void GetCourierStatusReturnsExceptionWhenTrackingNumberNotFound()
+        {
+            string trackingNumber = "TkU97874";
+            string orderStatus = "In Transit";
+            Assert.Throws<TrackingNumberNotFoundException>(() => cs.GetStatus(trackingNumber));
+
+        }
+
+        [Test]
+        public void GetCourierStatusReturnsProperExceptionWhenTrackingNumberNotFound()
+        {
+            string errorMsg = "Tracking number not found.";
+            var result = Assert.Throws<TrackingNumberNotFoundException>(() => cs.GetStatus("TRF78435"));
+
+            Assert.That(result.Message, Is.EqualTo(errorMsg));
+        }
+
+        [Test]
+        public void GetCourierStatusReturnsProperExceptionWhenTrackingNumberNotFound1()
+        {
+            string trackingNumber = "TFRE5467";
+            string errorMsg = $"Tracking number {trackingNumber} not found.";
+            var result = Assert.Throws<TrackingNumberNotFoundException>(() => cs.GetStatus(trackingNumber));
+
+            Assert.That(result.Message, Is.EqualTo(errorMsg));
+        }
+
+        [Test]
+        public void OrderCancelledByTrackingNumber()
+        {
+            string trackingNumber = "TR196";
+            var result = cs.OrderCancelled(trackingNumber);
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void GetAssignedOrderByStaffId()
+        {
+            int staffId =12;
+           List<Courier> courier=new List<Courier>();
+            courier=cs.GetOrderAssigned(staffId);
+
+            Assert.IsTrue(courier.TrueForAll(c => c.AssignedEmployeeID == staffId));
+            
+        }
+
+        [Test]
+        public void GetAssignedOrderIsNotNull()
+        {
+            int staffId = 12;
+            List<Courier> courier = new List<Courier>();
+            courier = cs.GetOrderAssigned(staffId);
+            Assert.IsNotNull(courier);
+        }
+
+        [Test]
+        public void GetAssignedOrderTypeChecking()
+        {
+            int staffId = 12;
+            List<Courier> courier = new List<Courier>();
+            courier = cs.GetOrderAssigned(staffId);
+            Assert.IsInstanceOf<List<Courier>>(courier);
+
+        }
+
+        [Test]
+        public void AddStaffByStaffId()
+        {
+            Employee e1=new Employee( employeeID: 55, employeeName:"John", email:"john@example.com", contactNumber:"9876543210", role:"Delivery Agent", salary:30000 );
+            var result = cs.AddStaff(e1);
+            Assert.IsNotNull (result);
+        }
+    }
+    }
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Assignment-4 DataBase Connection
+--------------------------------------------
+
+Program.cs
+========
+using CourierDatabaseConnection.DAO;
+using CourierDatabaseConnection.Entity;
+
+namespace CourierDatabaseConnection
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            CourierServiceDb db = new CourierServiceDb();
+            UserInterface ui = new UserInterface();
+            bool exit = true;
+
+            while (exit)
+            {
+                Console.WriteLine("\nFunctions:\n 1. AddProduct\n 2. GetCourierByServiceName\n 3. GetRevenue\n 4. GetShipmentStatus and UpdateCost\n 5. GetCourierByServiceId\n 6. Delete a Courier\n 7. Exit");
+                Console.Write("Enter your choice to perform: ");
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        // AddProduct
+                        try
+                        {
+                            CourierServices cs = new CourierServices();
+                            cs.ServiceId = ui.GetServiceId();
+                            cs.ServiceName = ui.GetServiceName();
+                            cs.CourierId = ui.GetCourierId();
+                            cs.Cost = ui.GetCost();
+                            cs.Status = ui.GetStatus();
+                            int add = db.AddCourier(cs);
+                            Console.WriteLine(add);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 2:
+                        // GetCourierByServiceName
+                        try
+                        {
+                            string name = ui.GetServiceName();
+                            CourierServices couSer = db.GetCourierByServiceName(name);
+                            if (couSer != null)
+                            {
+                                Console.WriteLine(couSer);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Table is empty with the {name} Service Name");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 3:
+                        // GetRevenue
+                        try
+                        {
+                            decimal revenue = db.GetRevenueReport();
+                            Console.WriteLine($"Total Revenue: {revenue}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 4:
+                        // GetShipmentStatus
+                        try
+                        {
+                            Dictionary<string, int> status = db.GenerateShipmentStatusReport();
+                            foreach (var item in status)
+                            {
+                                Console.WriteLine($"{item.Key} => {item.Value}");
+                            }
+
+                            // UpdateCost
+                            int id = ui.GetServiceId();
+                            decimal cost = ui.GetCost();
+                            int result = db.UpdateCourierCost(id, cost);
+                            Console.WriteLine($"Updated rows: {result}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 5:
+                        // GetCourierByServiceId
+                        try
+                        {
+                            int id = ui.GetServiceId();
+                            CourierServices sc = db.GetCourierByServiceId(id);
+                            if (sc != null)
+                            {
+                                Console.WriteLine(sc);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Table does not contain the service ID: {id}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 6:
+                        // Delete a Courier
+                        try
+                        {
+                            int id = ui.GetServiceId();
+                            int res = db.DeleteCourier(id);
+                            Console.WriteLine($"Deleted rows: {res}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        break;
+
+                    case 7:
+                        // Exit
+                        Console.WriteLine("Exiting...");
+                        exit = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a number between 1 and 7.");
+                        break;
+                }
+            }
+        }
+
+        static void Display(List<CourierServices> Couriers)
+        {
+            foreach (CourierServices cs1 in Couriers)
+            {
+                Console.WriteLine(cs1);
+            }
+        }
+    }
+}
+
+UerInterface.cs
+===========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CourierDatabaseConnection
+{
+    internal class UserInterface
+    {
+        public int GetServiceId()
+        {
+            Console.WriteLine("Enter ServiceId:");
+            return int.Parse(Console.ReadLine());   
+        }
+        public string GetServiceName()
+        {
+            Console.WriteLine("Enter ServiceName:");
+            return Console.ReadLine();
+        }
+        public int GetCourierId()
+        {
+            Console.WriteLine("Enter the CourierId:");
+            return int.Parse(Console.ReadLine());
+        }
+
+        public decimal GetCost()
+        {
+            Console.WriteLine("Enter the Cost:");
+            return decimal.Parse(Console.ReadLine());
+        }
+
+        public string GetStatus() 
+        {
+            Console.WriteLine("Enter the Courier Status:");
+            return Console.ReadLine();
+        }
+    }
+    }
+
+CourierServiceDb.cs
+===============
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CourierDatabaseConnection.ConnectionUtil;
+using CourierDatabaseConnection.Entity;
+
+
+namespace CourierDatabaseConnection.DAO
+{
+    internal class CourierServiceDb
+    {
+        SqlConnection con = null;
+        SqlCommand command = null;
+
+
+        public int AddCourier(CourierServices courier)
+        {
+            int rows= 0;
+            string query = $"insert into courierServices(serviceid,servicename,courierid,cost,status) values(@sid,@sname,@cid,@cost,@status)";
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    command.Parameters.Add(new SqlParameter("@sid", courier.ServiceId));
+                    command.Parameters.Add(new SqlParameter("@sname", courier.ServiceName));
+                    command.Parameters.Add(new SqlParameter("@cid", courier.CourierId));
+                    command.Parameters.Add(new SqlParameter("@cost", courier.Cost));
+                    command.Parameters.Add(new SqlParameter("@status", courier.Status));
+
+                    rows = command.ExecuteNonQuery();
+
+                }
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Could not add Courier");
+            }
+            return rows;
+        }
+
+
+        public int DeleteCourier(int id)
+        {
+            int rowsAffected = 0;
+            string query = $"delete from courierservices where serviceid=@id";
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    command.Parameters.Add(new SqlParameter("@id", id));
+                    rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected <= 0)
+                    {
+                        throw new Exception("Id Couldn't found and deleted");
+                    }
+                    
+                }
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error of removing the courier");
+            }
+
+            return rowsAffected;
+        }
+
+
+        public CourierServices GetCourierByServiceId(int id)
+        {
+            CourierServices services = null;
+            string query = "select * from courierservices where serviceid=@id";
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    command.Parameters.Add(new SqlParameter("@id", id));
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        services = new CourierServices();
+                        services.ServiceId = (int)reader["serviceid"];
+                        services.ServiceName = (string)reader["servicename"];
+                        services.CourierId = (int)reader["courierid"];
+                        services.Cost = (decimal)reader["cost"];
+                        services.Status = (string)reader["status"];
+                    }
+                }
+                if (services == null)
+                {
+                    throw new Exception("Id not found");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error of fetching Courier");
+            }
+            return services;
+        }
+
+
+
+
+        public int UpdateCourierCost(int id, decimal newCost)
+        {
+            int rowsAffected = 0;
+            CourierServices services = GetCourierByServiceId(id);
+            if (services == null)
+            {
+                throw new Exception("Product id doesnot found");
+            }
+            else
+            {
+                string query = "update courierservices set cost=@cost where serviceid=@sid";
+                try
+                {
+                    using (con = DBConnection.GetConnection())
+                    {
+                        command = new SqlCommand(query, con);
+                        command.Parameters.Add(new SqlParameter("@sid", id));
+                        command.Parameters.Add(new SqlParameter("@cost", newCost));
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("could not update");
+                }
+                return rowsAffected;
+            }
+        }
+
+        public Dictionary<string, int> GenerateShipmentStatusReport()
+        {
+            string query = "select status,count(*) as count from courierServices group by status;";
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string status =(string) reader["Status"];
+                        int count = (int)(reader["count"]);
+                        result[status] = count;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot Track the status");
+            }
+            return result;
+        }
+
+
+        public decimal GetRevenueReport()
+        {
+            
+            decimal revenue = 0;
+            string query = "select sum(cost) as revenue from courierservices ";
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        revenue = (decimal)reader["revenue"];
+                         
+                    }
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot access Revenue");
+            }
+            return revenue;
+        }
+
+        public  CourierServices GetCourierByServiceName(string serviceName)
+        {
+            CourierServices services = null;
+            string query = "select * from courierservices where servicename=@serviceName";
+            try
+            {
+                using (con = DBConnection.GetConnection())
+                {
+                    command = new SqlCommand(query, con);
+                    command.Parameters.Add(new SqlParameter("@serviceName", serviceName));
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        services = new CourierServices();
+                        services.ServiceId = (int)reader["serviceid"];
+                        services.ServiceName = (string)reader["servicename"];
+                        services.CourierId = (int)reader["courierid"];
+                        services.Cost = (decimal)reader["cost"];
+                        services.Status = (string)reader["status"];
+                    }
+                }
+                if (services == null)
+                {
+                    throw new Exception("ServiceName not found");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error of fetching Courier");
+            }
+            return services;
+        }
+
+    }
+    }
+
+DBConnection.cs
+=============
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace CourierDatabaseConnection.ConnectionUtil
+{
+    internal class DBConnection
+    {
+        static readonly string connectionString = @"Server =BOOMIKA\SQLEXPRESS ; Database =Courier  ; Integrated Security =True ; MultipleActiveResultSets=true;";
+        public static SqlConnection GetConnection()
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                conn.Open();
+                return conn;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public static void CloseConnection(SqlConnection conn)
+        {
+            if (conn != null)
+            {
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Close();
+                        conn.Dispose();
+                        Console.WriteLine("Connection Closed");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Connection is already null");
+                }
+            }
+
+
+        }
+    }
+}
+
+
+ 
