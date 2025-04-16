@@ -597,44 +597,51 @@ namespace Assignment_2
         //if it is name addtress or phone number.Validate customer information based on following critirea.
         //Ensure that names contain only letters and are properly capitalized, addresses do not contain special characters,
         //and phone numbers follow a specific format 
-        public bool ValidatingData(string data, string type)
-        { if (type == "name")
-            { // Check all characters are letters
-                for (int i = 0; i < data.Length; i++)
-                { if (!((data[i] >= 'A' && data[i] <= 'Z') || (data[i] >= 'a' && data[i] <= 'z')))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else if (type == "phone")
-            { // Expected format: XXX-XXX-XXXX (12 characters)
-                if (data.Length != 12)
-                {
-                    return false;
-                }
+         public bool ValidatingData(string data, string type)
+  {
+      if (type == "name")
+      {
+          // Check names
+          foreach (char ch in data)
+          {
+              if (!char.IsLetter(ch))
+                  return false;
+          }
+          return true;
+      }
+      else if (type == "phone")
+      {
+          //Phoneno format
+          if (data.Length != 12)
+              return false;
 
-                // Check digits and dashes in correct places
-                for (int i = 0; i < data.Length; i++)
-                { if (i == 3 || i == 7)
-                    { if (data[i] != '-')
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    { if (data[i] < '0' || data[i] > '9')
-                        {
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
+          // Check dash pos
+          if (data[3] != '-' || data[7] != '-')
+              return false;
 
-            return false; // Invalid type
-        }
+          // Check for digits
+          for (int i = 0; i < data.Length; i++)
+          {
+              if (i == 3 || i == 7)
+                  continue;
+              if (!char.IsDigit(data[i]))
+                  return false;
+          }
+          return true;
+      }
+      else if (type == "address")
+      {
+          // letters, digits, space, comma, period, dash only
+          foreach (char ch in data)
+          {
+              if (!(char.IsLetterOrDigit(ch) || ch == ' ' || ch == ',' || ch == '.' || ch == '-'))
+                  return false;
+          }
+          return true;
+      }
+
+      return false; 
+  }
 
         //question 11:Address Formatting: Develop a function that takes an address as input (street, city, state, zip code)
         //and formats it correctly, including capitalizing the first letter
