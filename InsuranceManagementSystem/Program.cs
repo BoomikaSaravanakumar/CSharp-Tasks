@@ -1,4 +1,4 @@
-﻿using InsuranceManagementSystem.DAO;
+using InsuranceManagementSystem.DAO;
 using InsuranceManagementSystem.Entity;
 using InsuranceManagementSystem.exception;
 
@@ -22,25 +22,19 @@ namespace InsuranceManagementSystem
                 Console.WriteLine(" 5. Delete Policy");
                 Console.WriteLine(" 6. Exit");
                 Console.Write("Enter your choice: ");
-
-                if (!int.TryParse(Console.ReadLine(), out int choice))
-                {
-                    Console.WriteLine("Invalid input. Please enter a number.");
-                    continue;
-                }
-
+                int choice=int.Parse(Console.ReadLine());
                 switch (choice)
                 {
                     case 1:
                         try
                         {
-                            Policy policy = new Policy
-                            {
-                                PolicyId = ui.GetPolicyId(),
-                                PolicyName = ui.GetPolicyName(),
-                                PolicyAmount = ui.GetPolicyAmount(),
-                                PolicyDuration = ui.GetPolicyDuration()
-                            };
+                            Policy policy = new Policy();
+
+                            policy.PolicyId = ui.GetPolicyId();
+                            policy.PolicyName = ui.GetPolicyName();
+                            policy.PolicyAmount = ui.GetPolicyAmount();
+                            policy.PolicyDuration = ui.GetPolicyDuration();
+                            
                             int result = service.CreatePolicy(policy);
                             Console.WriteLine(result > 0 ? "Policy created successfully." : "Failed to create policy.");
                         }
@@ -55,10 +49,12 @@ namespace InsuranceManagementSystem
                         {
                             int id = ui.GetPolicyId();
                             Policy policy = service.GetPolicy(id);
-                            if (policy != null)
-                                Console.WriteLine(policy);
-                            else
-                                Console.WriteLine("Policy not found.");
+                            Console.WriteLine(policy);
+                            
+                        }
+                        catch(PolicyNotFoundException p)
+                        {
+                            Console.WriteLine("Policy not found"+p.Message);
                         }
                         catch (Exception e)
                         {
@@ -69,16 +65,13 @@ namespace InsuranceManagementSystem
                     case 3:
                         try
                         {
+
                             List<Policy> policies = service.GetAllPolicies();
-                            if (policies.Count > 0)
+                            foreach (Policy p in policies)
                             {
-                                foreach (Policy p in policies)
-                                    Console.WriteLine(p);
+                                Console.WriteLine(p);
                             }
-                            else
-                            {
-                                Console.WriteLine("No policies found.");
-                            }
+                            
                         }
                         catch (Exception e)
                         {
@@ -90,7 +83,7 @@ namespace InsuranceManagementSystem
                         try
                         {
                             int id = ui.GetPolicyId();
-                            float newAmount = ui.GetPolicyAmount();
+                            double newAmount = ui.GetPolicyAmount();
                             Policy p = new Policy { PolicyId = id };
                             int result = service.UpdatePolicy(p, newAmount);
                             Console.WriteLine(result > 0 ? "Policy updated successfully." : "Update failed.");
