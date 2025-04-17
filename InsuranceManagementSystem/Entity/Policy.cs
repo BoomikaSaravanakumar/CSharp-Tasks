@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace InsuranceManagementSystem.Entity
     {
         public int PolicyId {  get; set; }
         public string PolicyName { get; set; }
-        public float PolicyAmount { get; set; }
+        public double PolicyAmount { get; set; }
         public DateTime PolicyDuration { get; set; }
 
         public Policy()
