@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +18,10 @@ namespace InsuranceManagementSystem
             Console.WriteLine("Enter the Policy Name:");
             return Console.ReadLine();
         }
-        public float GetPolicyAmount()
+        public double GetPolicyAmount()
         {
             Console.WriteLine("Enter the PolicyAmount:");
-            return float.Parse(Console.ReadLine());
+            return double.Parse(Console.ReadLine());
         }
         public DateTime GetPolicyDuration()
         {
